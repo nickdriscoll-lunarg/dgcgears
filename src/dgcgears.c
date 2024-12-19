@@ -2049,7 +2049,7 @@ main(int argc, char *argv[])
                VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
                .imageView = depth_view,
                .imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-               .resolveMode = sample_count != VK_SAMPLE_COUNT_1_BIT ? VK_RESOLVE_MODE_AVERAGE_BIT : VK_RESOLVE_MODE_NONE,
+               .resolveMode = VK_RESOLVE_MODE_NONE,
                .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
                .storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
                .clearValue = { .depthStencil.depth = 1.0f },
