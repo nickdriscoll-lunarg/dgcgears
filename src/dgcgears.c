@@ -2015,7 +2015,7 @@ main(int argc, char *argv[])
             !first[image_index] ? VK_IMAGE_LAYOUT_UNDEFINED : VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
             VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
             0, 0,
-            image_data[frame_index].image,
+            image_data[image_index].image,
             .subresourceRange = {
                .aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
                .baseMipLevel = 0,
@@ -2072,7 +2072,7 @@ main(int argc, char *argv[])
             VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
             VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
             0, 0,
-            image_data[frame_index].image,
+            image_data[image_index].image,
             .subresourceRange = {
                .aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
                .baseMipLevel = 0,
