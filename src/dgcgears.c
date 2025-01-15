@@ -2002,7 +2002,7 @@ main(int argc, char *argv[])
          ubo_buffer, 0, sizeof(ubo));
 
       vkCmdPipelineBarrier(frame_data[frame_index].cmd_buffer,
-         VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
          VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
          0,
          0, NULL,
