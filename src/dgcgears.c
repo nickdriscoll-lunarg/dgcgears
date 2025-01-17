@@ -1417,11 +1417,11 @@ init_gears()
    unsigned mem_size = sizeof(float) * GEAR_VERTEX_STRIDE * num_verts;
    vertex_offset = 0;
    normals_offset = sizeof(float) * 3;
-   ubo_buffer = create_buffer(sizeof(struct ubo), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT |
+   ubo_buffer = create_buffer(MAX_CONCURRENT_FRAMES * sizeof(struct ubo), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT |
                                                   VK_BUFFER_USAGE_TRANSFER_DST_BIT);
    vertex_buffer = create_buffer(mem_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
 
-   ubo_mem = allocate_buffer_mem(ubo_buffer, sizeof(struct ubo));
+   ubo_mem = allocate_buffer_mem(ubo_buffer, MAX_CONCURRENT_FRAMES * sizeof(struct ubo));
    vertex_mem = allocate_buffer_mem(vertex_buffer, mem_size);
 
    size_t indirect_size = 3 * (sizeof(uint32_t) + sizeof(VkDrawIndirectCommand));
@@ -1992,7 +1992,7 @@ main(int argc, char *argv[])
          0, 0,
          ubo_buffer, 0, sizeof(ubo));
 
-      vkCmdUpdateBuffer(frame_data[frame_index].cmd_buffer, ubo_buffer, 0, sizeof(ubo), &ubo);
+      vkCmdUpdateBuffer(frame_data[frame_index].cmd_buffer, ubo_buffer, frame_index * sizeof(ubo), sizeof(ubo), &ubo);
 
       buffer_barrier(frame_data[frame_index].cmd_buffer,
          VK_PIPELINE_STAGE_TRANSFER_BIT,
@@ -2002,7 +2002,7 @@ main(int argc, char *argv[])
          ubo_buffer, 0, sizeof(ubo));
 
       vkCmdPipelineBarrier(frame_data[frame_index].cmd_buffer,
-         VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
          VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
          0,
          0, NULL,
